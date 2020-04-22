@@ -1,0 +1,20 @@
+query EquipmentTypesQuery {
+  equipmentTypes {
+    edges {
+      node {
+        id
+        name
+        category
+        propertyTypes {
+          ...PropertyTypeFragment
+        }
+        positionDefinitions {
+          ...EquipmentPositionDefinitionFragment
+        }
+        portDefinitions {
+          ...EquipmentPortDefinitionFragment
+        }
+      }
+    }
+  }
+}

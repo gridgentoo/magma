@@ -1,0 +1,16 @@
+mutation EditEquipmentTypeMutation($input: EditEquipmentTypeInput!) {
+  editEquipmentType(input: $input) {
+    id
+    name
+    category
+    propertyTypes {
+      ...PropertyTypeFragment
+    }
+    positionDefinitions {
+      ...EquipmentPositionDefinitionFragment
+    }
+    portDefinitions {
+      ...EquipmentPortDefinitionFragment
+    }
+  }
+}

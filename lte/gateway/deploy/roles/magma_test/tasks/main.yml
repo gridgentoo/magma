@@ -1,0 +1,101 @@
+---
+- name: Set Python environment variable
+  become: yes
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    line: "{{ item }}"
+  with_items:
+    - S1AP_TESTER_ROOT={{ s1ap_tester_root }}
+    - S1AP_TESTER_SRC={{ s1ap_tester_src }}
+    - GATEWAY_NAME={{ gateway_name }}
+    - GATEWAY_IP={{ gateway_ip }}
+    - GATEWAY_PORT={{ gateway_port }}
+    - M2_HOME={{ mvn_dir }}
+    - SWAGGER_SPEC={{ swagger_spec }}
+    - SWAGGER_CODEGEN_OUTPUT={{ swagger_codegen_output }}
+    - CODEGEN_ROOT={{ codegen_root }}
+  when: full_provision
+
+- name: Set up S1AP tester build directory
+  file: path={{ s1ap_tester_root }}/bin state=directory recurse=yes
+  when: full_provision
+
+- name: Set a convenience function for starting the S1AP tester
+  lineinfile: >
+    dest=/home/{{ ansible_user }}/.bashrc
+    state=present
+    line="alias s1aptester='mkdir -p /tmp/fw; cd $S1AP_TESTER_ROOT; venvsudo LD_LIBRARY_PATH=$S1AP_TESTER_ROOT/bin PATH=$PATH:/sbin bin/testCntrlr'"
+  when: full_provision
+
+- name: Add integ test scripts to path
+  become: yes
+  file:
+    src: "{{ test_scripts }}/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  with_items:
+    - clone_s1_tester.sh
+    - build_s1_tester.sh
+  when: full_provision
+
+- name: Clone s1aptester code
+  shell: "{{ test_scripts }}/clone_s1_tester.sh"
+  args:
+    executable: /bin/bash
+  environment:
+    MAGMA_ROOT: "{{ magma_root }}"
+    S1AP_TESTER_SRC: "{{ s1ap_tester_src }}"
+    S1AP_TESTER_ROOT: "{{ s1ap_tester_root }}"
+  when: full_provision
+
+- name: Build s1aptester code
+  shell: "{{ test_scripts }}/build_s1_tester.sh"
+  args:
+    executable: /bin/bash
+  environment:
+    MAGMA_ROOT: "{{ magma_root }}"
+    S1AP_TESTER_SRC: "{{ s1ap_tester_src }}"
+    S1AP_TESTER_ROOT: "{{ s1ap_tester_root }}"
+  when: full_provision
+
+# pip3 is busted on Debian Jessie so run in virtualenv.
+# Don't preburn this because /tmp gets blown away
+- name: Install pyparsing
+  pip:
+    name: pyparsing
+    extra_args: --cache-dir $PIP_CACHE_HOME
+    virtualenv_python: python3.5
+    virtualenv: /tmp/virtualenv
+  when: full_provision
+
+- name: Generate python types from C headers
+  command: "/tmp/virtualenv/bin/python3.5 {{ test_scripts }}/c_parser.py"
+  environment:
+    S1AP_TESTER_ROOT: "{{ s1ap_tester_root }}"
+  when: full_provision
+
+- name: Install MySQL client for OAI upstreaming
+  become: yes
+  apt: pkg=default-libmysqlclient-dev state=present update_cache=yes
+  when: preburn
+
+- name: Check whether swagger.yml exists
+  stat:
+    path: "{{ swagger_spec }}"
+  register: swagger_yml_present
+  when: full_provision
+
+#- name: Generate Python bindings for the REST API with swagger-codegen
+#  no_log: True
+#  command: "{{ test_scripts }}/generate_python_bindings.sh"
+#  when: full_provision and (swagger_yml_present.stat.exists == true)
+
+- name: Add the test controller DNS entry
+  become: yes
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '.*controller.magma.test$'
+    line: "10.0.2.2 controller.magma.test"
+    state: present
+  when: full_provision

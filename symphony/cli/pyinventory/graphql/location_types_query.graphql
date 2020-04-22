@@ -1,0 +1,13 @@
+query LocationTypesQuery {
+  locationTypes {
+    edges {
+      node {
+        id
+        name
+        propertyTypes {
+          ...PropertyTypeFragment
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,74 @@
+---
+# Copyright (c) 2019-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
+
+# proxy_type refers to the names of the proxy systemd nghttpx services installed.
+# Currently the values supported are: 'clientcert', 'open', 'obsidian', 'internal'
+
+# proxy_aliases refers to proxy config when a service might have more than one
+# port. Example in magma/feg/cloud/configs/service_registry.yml
+
+services:
+  streamer:
+    host: "localhost"
+    port: 9082
+    proxy_type: "clientcert"
+
+  metricsd:
+    host: "localhost"
+    port: 9084
+    proxy_type: "clientcert"
+
+  certifier:
+    host: "localhost"
+    port: 9086
+    proxy_type: "internal"
+
+  bootstrapper:
+    host: "localhost"
+    port: 9088
+    proxy_type: "open"
+
+  accessd:
+    host: "localhost"
+    port: 9091
+    proxy_type: "clientcert"
+
+  obsidian:
+    host: "localhost"
+    port: 9093
+    proxy_type: "obsidian"
+
+  dispatcher:
+    host: "localhost"
+    port: 9096
+    proxy_type: "clientcert"
+
+  directoryd:
+    host: "localhost"
+    port: 9100
+    proxy_type: "clientcert"
+
+  state:
+    host: "localhost"
+    port: 9105
+    proxy_type: "clientcert"
+
+  device:
+    host: "localhost"
+    port: 9106
+    proxy_type: "clientcert"
+
+  configurator:
+    host: "localhost"
+    port: 9108
+    proxy_type: "clientcert"
+
+  tenants:
+    host: "localhost"
+    port: 9110
+    proxy_type: "clientcert"

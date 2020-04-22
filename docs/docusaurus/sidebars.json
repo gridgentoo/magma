@@ -1,0 +1,31 @@
+{
+  "docs": {
+    "Basics": ["basics/introduction", "basics/prerequisites", "basics/quick_start_guide"],
+    "Orchestrator": [
+      {
+        "type": "subcategory",
+        "label": "Deploying Orchestrator",
+        "ids": [
+          "orc8r/deploy_intro",
+          "orc8r/deploy_build",
+          "orc8r/deploy_install",
+          "orc8r/deploy_upgrade"
+        ]
+      }
+    ],
+    "Access Gateway": ["lte/setup_deb", "lte/config_agw", "lte/enodebd",
+      "lte/tr069", "lte/s1ap_tests", "lte/dev_notes"],
+    "Federation Gateway": [
+      {
+        "type": "subcategory",
+        "label": "Deploying FeG",
+        "ids": [
+          "feg/deploy_intro",
+          "feg/deploy_build",
+          "feg/deploy_install"
+        ]
+      }
+    ],
+    "Symphony": ["symphony/quick_start", "symphony/download_requirements", "symphony/building_the_symphony_agent"]
+  }
+}
