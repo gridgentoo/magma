@@ -1,0 +1,21 @@
+# Copyright (c) 2016-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
+#
+[Unit]
+Description=Devmand
+After=magmad.service
+
+[Service]
+EnvironmentFile=/etc/magma/env
+WorkingDirectory=/usr/bin
+ExecStart=/bin/devmand --logtostderr=1 --device_configuration_file=${DEVICE_CONFIG_FILE}
+KillMode=mixed
+Restart=always
+Delegate=yes
+
+[Install]
+WantedBy=multi-user.target
