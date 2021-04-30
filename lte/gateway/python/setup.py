@@ -91,7 +91,7 @@ setup(
         # pin recursive dependencies of ryu and others
         'chardet==3.0.4',
         'docker==4.0.2',
-        'urllib3==1.25.3',
+        'urllib3==1.25.8',
         'websocket-client==0.56.0',
         'requests==2.22.0',
         'certifi==2019.6.16',
