@@ -62,7 +62,7 @@ setup(
         'redis-collections>=0.4.2',
         'aiohttp>=0.17.2',
         'grpcio==1.16.1',
-        'protobuf==3.6.1',
+        'protobuf==3.15.0',
         'Jinja2>=2.8',
         'netifaces>=0.10.4',
         'pylint>=1.7.1',
