@@ -94,7 +94,7 @@ setup(
         'urllib3==1.25.3',
         'websocket-client==0.56.0',
         'requests==2.22.0',
-        'certifi==2019.6.16',
+        'certifi==2022.12.7',
         'idna==2.8',
         'python-dateutil==2.8.1',
         'six>=1.12.0',
