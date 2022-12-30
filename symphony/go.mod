@@ -22,7 +22,6 @@ require (
 	github.com/go-sql-driver/mysql v1.5.1-0.20200311113236-681ffa848bae
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/golang/protobuf v1.4.0
-	github.com/google/addlicense v0.0.0-20200301095109-7c013a14f2e2 // indirect
 	github.com/google/uuid v1.1.1
 	github.com/google/wire v0.4.0
 	github.com/gorilla/mux v1.7.4
@@ -32,7 +31,7 @@ require (
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/jessevdk/go-flags v1.4.1-0.20181221193153-c0795c8afcf4
 	github.com/jstemmer/go-junit-report v0.9.1 // indirect
-	github.com/justinas/nosurf v1.1.0
+	github.com/justinas/nosurf v1.1.1
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/nats-io/nats.go v1.9.2 // indirect
 	github.com/pkg/errors v0.9.1
